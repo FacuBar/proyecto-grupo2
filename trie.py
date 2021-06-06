@@ -1,5 +1,6 @@
 from linkedlist import LinkedList, Node, delete as list_delete, length, add_toend, printlist
 from algo1 import *
+from mydictionar import insert as hash_insert
 
 class Trie:
     root = None
@@ -9,9 +10,10 @@ class TrieNode:
     children = None
     key = None
     isEndOfWord = False
+    rep = None
 
-"""-Insert(T, element): inserta element en T-"""
-def insert(T, element):
+"""-Insert(T, element, doc): inserta element en T y contabiliza las incidencias en doc-"""
+def insert(T, element, doc):
     if not T.root:
         T.root = TrieNode()
         T.root.children = LinkedList()
@@ -45,6 +47,7 @@ def _insert(node, c, i):
     else:
         if len(c) - 1 == i:
             node.isEndOfWord = True
+            rep = hash_insert(doc)
             return
         #Si no es final de palabra ...
         else:
@@ -60,15 +63,14 @@ def _insert(node, c, i):
                 node.children.head.value.parent = node
                 return _insert(node.children.head.value, c, i+1)
 
-"""-Search(T, element): Verifica la existencia de element dentro de T-"""
+"""-Search(T, element): Devuelve el último nodo de element dentro de T-"""
 def search(T, element):
     if not T.root:
         return False
 
     temp = _search(T.root.children.head.value, element, 0) 
     
-    if temp: return True
-    return False
+    return temp
 #return: último nodo de element/Falso si este no existe
 def _search(node, c, i):
     #Si la key del TrieNode no coincide con el char ...
