@@ -1,0 +1,6 @@
+/dist/*
+/build/*
+/wheelhouse/*
+MANIFEST
+
+__pycache__/
