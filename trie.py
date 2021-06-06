@@ -73,7 +73,7 @@ def search(T, element):
     temp = _search(T.root.children.head.value, element, 0) 
     
     return temp
-#return: último nodo de element/Falso si este no existe
+
 def _search(node, c, i):
     #Si la key del TrieNode no coincide con el char ...
     if node.key != c[i]:
