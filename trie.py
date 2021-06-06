@@ -1,6 +1,6 @@
 from linkedlist import LinkedList, Node, delete as list_delete, length, add_toend, printlist
 from algo1 import *
-from mydictionar import insert as hash_insert
+from mydictionary import insert as hash_insert
 
 class Trie:
     root = None
