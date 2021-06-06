@@ -10,6 +10,7 @@ class TrieNode:
     children = None
     key = None
     isEndOfWord = False
+    #Contador de repeticiones de una palabra en cada doc
     rep = None
 
 """-Insert(T, element, doc): inserta element en T y contabiliza las incidencias en doc-"""
@@ -47,6 +48,7 @@ def _insert(node, c, i):
     else:
         if len(c) - 1 == i:
             node.isEndOfWord = True
+            #Se contabiliza repeticiones de la palabra en doc
             rep = hash_insert(doc)
             return
         #Si no es final de palabra ...
