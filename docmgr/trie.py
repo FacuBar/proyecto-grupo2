@@ -1,6 +1,6 @@
 from linkedlist import LinkedList, Node, delete as list_delete, length, add_toend, printlist
 from algo1 import *
-from mydictionary import insert as hash_insert
+from mydictionary import insert as hash_insert, dictionary
 
 class Trie:
     root = None
@@ -23,9 +23,9 @@ def insert(T, element, doc):
         T.root.children.head.value.parent = T.root
         T.root.children.head.value.key = element[0]
 
-    return _insert(T.root.children.head.value, element, 0)
+    return _insert(T.root.children.head.value, element, 0, doc)
     
-def _insert(node, c, i):
+def _insert(node, c, i, doc):
     #Si la key del TrieNode no coincide con el char ...
     if node.key != c[i]:
         #Se sigue buscando en los hermanos del TrieNode ...
@@ -33,7 +33,7 @@ def _insert(node, c, i):
         while cn:
             #Si un hno coincide, se llama la función desde este
             if cn.value.key == c[i]:
-                return _insert(cn.value, c, i)
+                return _insert(cn.value, c, i, doc)
 
             if cn.nextNode == None: 
                 temp = cn
@@ -43,19 +43,22 @@ def _insert(node, c, i):
         temp.nextNode.value = TrieNode()
         temp.nextNode.value.parent = node.parent
         temp.nextNode.value.key = c[i]
-        return _insert(temp.nextNode.value, c, i)
+        return _insert(temp.nextNode.value, c, i, doc)
     
     else:
         if len(c) - 1 == i:
-            node.isEndOfWord = True
+            if node.isEndOfWord == False:
+                D = dictionary()
+                node.rep = D
+                node.isEndOfWord = True
             #Se contabiliza repeticiones de la palabra en doc
-            rep = hash_insert(doc)
-            return
+            hash_insert(node.rep, doc)
+            return node
         #Si no es final de palabra ...
         else:
             #y tiene hijos, llamada recursiva
             if node.children:
-                return _insert(node.children.head.value, c, i+1)
+                return _insert(node.children.head.value, c, i+1, doc)
             #y no tiene hijos, se crea el TrieNode corresp y llamada recursiva
             else:
                 node.children = LinkedList()
@@ -63,16 +66,14 @@ def _insert(node, c, i):
                 node.children.head.value = TrieNode()
                 node.children.head.value.key = c[i+1]
                 node.children.head.value.parent = node
-                return _insert(node.children.head.value, c, i+1)
+                return _insert(node.children.head.value, c, i+1, doc)
 
 """-Search(T, element): Devuelve el último nodo de element dentro de T-"""
 def search(T, element):
     if not T.root:
         return False
 
-    temp = _search(T.root.children.head.value, element, 0) 
-    
-    return temp
+    return _search(T.root.children.head.value, element, 0) 
 
 def _search(node, c, i):
     #Si la key del TrieNode no coincide con el char ...
