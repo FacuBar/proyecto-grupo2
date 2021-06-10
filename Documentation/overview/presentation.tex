@@ -1,0 +1,29 @@
+\documentclass{beamer}
+
+\usetheme{Boadilla}
+\beamertemplatenavigationsymbolsempty
+
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\title{docmgr Overview}
+\subtitle{Word index manager for documents}
+\author[Facundo E. \and Iñaki R.]{Facundo Escobar \and Iñaki Rodriguez}
+\institute[UnCuyo]{Universidad Nacional de Cuyo}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \begin{tikzpicture}[>=latex,line join=bevel,scale=0.5]
+    \pgfsetlinewidth{1bp}
+    \input{structure.tex}
+  \end{tikzpicture}
+\end{frame}
+
+\end{document}
