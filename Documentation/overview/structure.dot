@@ -1,69 +1,78 @@
 digraph G {
+  ranksep = 0.125;
   node [ shape = circle, style = filled, fillcolor = bisque ];
-
-  subgraph trie_end {
-    node [ fillcolor = darkolivegreen2 ];
-    I;
-    H2;
-    O;
-  }
-
-  subgraph hash_map {
-    node [ shape = plaintext, fillcolor = white ];
-    node [ label = <
-      <table border="0" cellborder="1" cellpadding="8" cellspacing="0">
-        <tr><td port="start"></td></tr>
-        <tr><td></td></tr>
-        <tr><td></td></tr>
-        <tr><td></td></tr>
-        <tr><td></td></tr>
-        <tr><td></td></tr>
-      </table>
-    > ];
-    hash1;
-    hash2;
-    hash3;
-  }
+  edge [ arrowhead = none ];
 
   subgraph cluster_trie {
+    label = Trie;
     graph [ color = invis ];
+    edge [ constraint = true ];
 
-    C -> H1 -> I -> G -> H2;
-    C -> T -> O;
+    C [ label = "" ];
+    H1 [ label = "H" ];
+    I;
+    G;
+
+    T;
+
+    node [ fillcolor = darkolivegreen2 ];
+    O;
+    I;
+    H2 [ label = "H" ];
   }
 
   subgraph cluster_hash {
     graph [ color = invis ];
 
-    hash1 -> hash2 -> hash3 [ style = invis ];
+    hashstart [ shape = box, color = invis, fillcolor = invis, label = HashMaps ];
+
+    node [ shape = plaintext, fillcolor = white ];
+    node [ label = <
+      <table border="0" cellborder="1" cellpadding="8" cellspacing="0">
+        <tr><td port="start"></td></tr>
+        <tr><td></td></tr>
+        <tr><td port="middle"></td></tr>
+        <tr><td></td></tr>
+        <tr><td></td></tr>
+        <tr><td port="end"></td></tr>
+      </table>
+    > ];
+
+    hash1;
+    hash2;
+    hash3;
+
+    hashstart -> hash1 -> hash2 -> hash3 [ style = invis ];
   }
 
-  subgraph {
-    newrank = true;
-    mix0 [ style = invis ];
-    mix1 [ style = invis ];
-    // mix0 -> mix1 [ rank = same, style = invis ];
-  }
-
-  subgraph cluster_mix {
+  subgraph cluster_docs {
     graph [ color = invis ];
 
-    mix0 -> C [ lhead = cluster_trie, style = invis ];
-    mix1 -> hash1 [ lhead = cluster_hash, style = invis ];
+    docstart [ style = invis ];
+
+    node [ shape = plaintext, fillcolor = white ];
+    ubik [ label = <
+      <table border="0" cellborder="1" cellspacing="0">
+        <tr><td port="start">UBIK.txt</td><td>48</td></tr>
+      </table>
+    > ];
+    raven [ label = <
+      <table border="0" cellborder="1" cellspacing="0">
+        <tr><td port="start">the_raven.txt</td><td>4</td></tr>
+      </table>
+    > ];
+
+    docstart -> ubik -> raven [ style = invis ];
   }
+  
+  C -> H1 -> I -> G -> H2;
+  C -> T -> O;
 
-  C [ label = "" ];
-  H1 [ label = "H" ];
-  H2 [ label = "H" ];
-  I;
-  H2;
-  O;
+  hash2:middle -> ubik:start [ constraint = false ];
+  hash2:end -> raven:start [ constraint = false ];
 
-  hash1;
-  hash2;
-  hash3;
-
-  O -> hash1:start;
-  I -> hash2:start;
-  H2 -> hash3:start;
+  splines = spline;
+  O -> hash1:start [ constraint = false ];
+  I -> hash2:start [ constraint = false ];
+  H2 -> hash3:start [ constraint = false ];
 }
