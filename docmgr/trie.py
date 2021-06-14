@@ -1,6 +1,6 @@
 from linkedlist import LinkedList, Node, delete as list_delete, length, add_toend, printlist
 from algo1 import *
-from mydictionary import insert as hash_insert, dictionary
+from hashmap import hashmap_insert, HashMap, hashmap_search
 
 class Trie:
     root = None
@@ -21,18 +21,18 @@ def insert(T, element, doc):
         T.root.children.head = Node()
         T.root.children.head.value = TrieNode()
         T.root.children.head.value.parent = T.root
-        T.root.children.head.value.key = element[0]
+        T.root.children.head.value.key = toUpp(element[0])
 
     return _insert(T.root.children.head.value, element, 0, doc)
     
 def _insert(node, c, i, doc):
     #Si la key del TrieNode no coincide con el char ...
-    if node.key != c[i]:
+    if node.key != toUpp(c[i]):
         #Se sigue buscando en los hermanos del TrieNode ...
         cn = node.parent.children.head
         while cn:
             #Si un hno coincide, se llama la función desde este
-            if cn.value.key == c[i]:
+            if cn.value.key == toUpp(c[i]):
                 return _insert(cn.value, c, i, doc)
 
             if cn.nextNode == None: 
@@ -42,17 +42,23 @@ def _insert(node, c, i, doc):
         temp.nextNode = Node()
         temp.nextNode.value = TrieNode()
         temp.nextNode.value.parent = node.parent
-        temp.nextNode.value.key = c[i]
+        temp.nextNode.value.key = toUpp(c[i])
         return _insert(temp.nextNode.value, c, i, doc)
     
     else:
         if len(c) - 1 == i:
             if node.isEndOfWord == False:
-                D = dictionary()
+                D = HashMap()
                 node.rep = D
                 node.isEndOfWord = True
             #Se contabiliza repeticiones de la palabra en doc
-            hash_insert(node.rep, doc)
+            
+            temp = hashmap_search(node.rep, doc)
+            if temp:
+                temp.value += 1
+            else:
+                hashmap_insert(node.rep, doc)
+            
             return node
         #Si no es final de palabra ...
         else:
@@ -64,7 +70,7 @@ def _insert(node, c, i, doc):
                 node.children = LinkedList()
                 node.children.head = Node()
                 node.children.head.value = TrieNode()
-                node.children.head.value.key = c[i+1]
+                node.children.head.value.key = toUpp(c[i+1])
                 node.children.head.value.parent = node
                 return _insert(node.children.head.value, c, i+1, doc)
 
@@ -77,13 +83,13 @@ def search(T, element):
 
 def _search(node, c, i):
     #Si la key del TrieNode no coincide con el char ...
-    if node.key != c[i]:
+    if node.key != toUpp(c[i]):
         #Se sigue buscando en los hermanos del TrieNode ...
         if node.parent.children != None:
             cn = node.parent.children.head
             while cn:
                 #Si un hno coincide, se llama la función desde este
-                if cn.value.key == c[i]:
+                if cn.value.key == toUpp(c[i]):
                     return _search(cn.value, c, i)
                 cn = cn.nextNode
             #Si el TrieNode no tiene hno, la palabra no existe
@@ -183,3 +189,10 @@ def len_shittyarray(word):
     for i in range(33):
         if word[i] == '/':
             return i 
+
+
+def toUpp(c):
+    if ord(c) > 96 and ord(c) < 123:
+        return chr(ord(c) - ord('a') + ord('A'))
+    else: 
+        return c

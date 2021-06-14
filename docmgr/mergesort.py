@@ -25,7 +25,7 @@ def merge(arr, start, med, tail):
     i = j = 0
     k = start
     while i < l1 and j < l2:
-        if left[i] <= right[j]:
+        if left[i].value >= right[j].value:
             arr[k] = left[i]
             i += 1
 
