@@ -85,7 +85,7 @@ def _search(D, i, k):
     return None
 
 
-def search(D, k):
+def hashmap_search(D, k):
     i = key_hash(k)
 
     return _search(D, i, k)
