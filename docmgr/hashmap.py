@@ -65,30 +65,30 @@ def hashmap_insert(D, k, v):
 
 def _search(D, i, k):
     if D.head is None:
-        return -1
+        return None
 
     if D.head[i] is None:
-        return -1
+        return None
 
     h = i
     while D.head[i] is not None: 
         if D.head[i].key == k:
-            return i
+            return D.head[i]
 
         i += 1
 
         if i == h:
-            return -1
+            return None
         if i >= SIZE:
             i -= SIZE
 
-    return -1
+    return None
 
 
 def search(D, k):
     i = key_hash(k)
 
-    return _search(D, i, k) >= 0
+    return _search(D, i, k)
 
 
 def delete(D, k):
