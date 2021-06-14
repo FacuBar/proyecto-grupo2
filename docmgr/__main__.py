@@ -1,3 +1,4 @@
+from mainfuncs import fetchDocList, indexDocs
 import sys
 import os
 
@@ -20,19 +21,45 @@ def usage(prog):
     print("\n".join(out))
 
 
-def create():
-    print("Indexing ...")
+def create(path):
+    if path[-1:] != '/':
+        path += '/'
+
+    try:
+        docs = os.listdir(path)
+        print("Indexing ...")
+        indexDocs(path, docs)
+        print('library created successfully')
+        #Pendiente permanencia en disco
+
+    except:
+        print(f"FileNotFoundError: No such file or directory: '{path}'")
+        sys.exit(0)
 
 
-def search():
+def search(word):
+    #Recuperar estructura de disco
+    #T = Trie()
+    T = None
+    #TODO
     print("Searching ...")
+    doclist = fetchDocList(T, word)
+
+    if doclist:
+        for i in range(len(doclist)):
+            if doclist[i].key == None:
+                break
+            print(f"({i}) {doclist[i].key}: {doclist[i].value}")
+    else:
+        print('no document found')
+
 
 
 def parse_args(prog, argv):
     if (argv[0] == "-s" or argv[0] == "--search"):
-        search()
+        search(argv[1])
     elif (argv[0] == "-c" or argv[0] == "--create"):
-        create()
+        create(argv[1])
     elif (argv[0] == "-h" or argv[0] == "--help"):
         usage(prog)
         sys.exit(0)
