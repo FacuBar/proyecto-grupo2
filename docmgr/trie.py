@@ -1,6 +1,6 @@
-from linkedlist import LinkedList, Node, delete as list_delete, length, add_toend, printlist
-from algo1 import *
-from hashmap import hashmap_insert, HashMap, hashmap_search
+from .algo1 import Array, String, concat
+from .hashmap import HashMap, hashmap_insert, hashmap_search
+from .linkedlist import LinkedList, Node, delete as list_delete, length, append
 
 
 class Trie:
@@ -41,7 +41,7 @@ def _insert(node, c, i, doc):
             if cn.value.key == toUpp(c[i]):
                 return _insert(cn.value, c, i, doc)
 
-            if cn.nextNode == None:
+            if cn.nextNode is None:
                 temp = cn
             cn = cn.nextNode
         # Si ningún hno coincide, se agrega uno que lo haga
@@ -53,7 +53,7 @@ def _insert(node, c, i, doc):
 
     else:
         if len(c) - 1 == i:
-            if node.isEndOfWord == False:
+            if node.isEndOfWord is False:
                 D = HashMap()
                 node.rep = D
                 node.isEndOfWord = True
@@ -95,7 +95,7 @@ def _search(node, c, i):
     # Si la key del TrieNode no coincide con el char ...
     if node.key != toUpp(c[i]):
         # Se sigue buscando en los hermanos del TrieNode ...
-        if node.parent.children != None:
+        if node.parent.children is not None:
             cn = node.parent.children.head
             while cn:
                 # Si un hno coincide, se llama la función desde este
@@ -107,7 +107,7 @@ def _search(node, c, i):
 
     else:
         if len(c) - 1 == i:
-            if node.isEndOfWord == True:
+            if node.isEndOfWord is True:
                 return node
             return False
         # Si no es final de palabra ...
@@ -142,7 +142,7 @@ def _delete(node):
         node.isEndOfWord = False
         return True
 
-    while node.isEndOfWord == None or node.key != None:
+    while node.isEndOfWord is None or node.key is not None:
         # Si elemento comparte segmentos con otra palabra, se termina el proceso de eliminación
         if node.children:
             break
@@ -161,52 +161,51 @@ def get_words(T):
     if not T.root or not T.root.children:
         return None
     # LD donde se almacenan palabras.
-    l = LinkedList()
-    _get_words(T.root, l)
-    return l
+    li = LinkedList()
+    _get_words(T.root, li)
+    return li
 
 
-def _get_words(node, l, word=Array(33, 'c'), i=0):
-    if node.key == None:
+def _get_words(node, li, i=0, word=Array(33, 'c')):
+    if node.key is None:
         cn = node.children.head
         while cn:
-            _get_words(cn.value, l)
+            _get_words(cn.value, li)
             cn = cn.nextNode
         return
 
-    if node.isEndOfWord == True:
+    if node.isEndOfWord is True:
         word[i] = node.key
         # caracter que denota final de palabra
-        word[i+1] = '/'
+        word[i + 1] = '/'
         # se crea una String con la palabra contenida en el Array
         string = get_string(word)
-        add_toend(l, string)
+        append(li, string)
 
         if node.children:
             cn = node.children.head
             while cn:
-                _get_words(cn.value, l, i=i+1)
+                _get_words(cn.value, li, i + 1)
                 cn = cn.nextNode
 
     else:
         word[i] = node.key
         cn = node.children.head
         while cn:
-            _get_words(cn.value, l, i=i+1)
+            _get_words(cn.value, li, i + 1)
             cn = cn.nextNode
-# 'c' + 'c' = 'cc', Quién te conocé papá?
 
 
 def get_string(a):
     s = String('')
-    for i in range(len_shittyarray(a)):
+    for i in range(len_array_word(a)):
         s = concat(s, String(a[i]))
     return s
 
 # Longitud de la palabra contenida en el array
 
 
-def len_shittyarray(word):
+def len_array_word(word):
     for i in range(33):
         if word[i] == '/':
             return i

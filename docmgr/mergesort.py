@@ -1,4 +1,4 @@
-from algo1 import *
+from .algo1 import Array
 
 
 def mergeSort(arr):

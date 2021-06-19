@@ -1,5 +1,6 @@
-from algo1 import Array
 from math import floor
+
+from .algo1 import Array
 
 
 SIZE = 1000

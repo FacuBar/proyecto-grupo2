@@ -18,7 +18,7 @@ def add(list, element):
 
 
 def search(list, element):
-    if list.head == None:
+    if list.head is None:
         return None
 
     current_node = list.head
@@ -27,7 +27,7 @@ def search(list, element):
         if current_node.value == element:
             return current_node
         # se llega al fin de la lista sin encontrar el elemento, se devuelve None
-        if current_node.nextNode == None:
+        if current_node.nextNode is None:
             return None
         current_node = current_node.nextNode
 
@@ -37,7 +37,7 @@ def insert(list, element, index):
     if index > length(list):
         return None
 
-    if list.head == None:
+    if list.head is None:
         add(list, element)
         return 0
 
@@ -63,7 +63,7 @@ def insert(list, element, index):
 
 
 def delete(list, element):
-    if list.head == None:
+    if list.head is None:
         return None
 
     counter = 0
@@ -84,12 +84,12 @@ def delete(list, element):
         prior_node = current_node
         current_node = current_node.nextNode
 
-        if current_node == None:
+        if current_node is None:
             return None
 
 
 def length(list):
-    if list.head == None:
+    if list.head is None:
         return 0
 
     current_node = list.head
@@ -98,7 +98,7 @@ def length(list):
     while True:
         counter += 1
         current_node = current_node.nextNode
-        if current_node == None:
+        if current_node is None:
             return counter
 
 
@@ -145,14 +145,14 @@ def printlist(L, index=0):
         current_node = current_node.nextNode
 
 
-def add_toend(l, element):
-    if l.head == None:
-        add(l, element)
+def append(li, element):
+    if li.head is None:
+        add(li, element)
         return
 
     new_node = Node()
     new_node.value = element
-    current_node = l.head
+    current_node = li.head
 
     while current_node:
         if not current_node.nextNode:

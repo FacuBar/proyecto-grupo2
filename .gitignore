@@ -4,6 +4,7 @@
 MANIFEST
 
 __pycache__/
+.eggs/
 
 
 /out/

@@ -1,6 +1,7 @@
 from setuptools import setup
 import os
 
+from docmgr import VERSION
 
 scripts = []
 if os.name == 'posix':
@@ -12,9 +13,8 @@ else:
 
 setup(
     name='docmgr',
-    version='0.0.0',
+    version=VERSION,
     author='Facundo Escobar, Iñaki Rodriguez',
     packages=['docmgr'],
     scripts=scripts,
-    setup_requires=['autopep8'],
 )

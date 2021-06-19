@@ -1,7 +1,7 @@
-from mergesort import mergeSort
-from trie import insert, Trie, search
-from algo1 import *
-from hashmap import HashMapNode
+from .algo1 import String, substr
+from .hashmap import HashMapNode
+from .mergesort import mergeSort
+from .trie import Trie, insert, search
 
 """create()"""
 
@@ -23,7 +23,7 @@ def indexWords(txt, doc, T):
     s = 0
     withinWord = False
 
-    for i in range(len(txt)):
+    for i in range(len(txt) - 1):
         if not withinWord:
             if isLetter(txt[i]):
                 s = i
@@ -33,6 +33,11 @@ def indexWords(txt, doc, T):
                 withinWord = False
                 word = substr(txt, s, i)
                 insert(T, word, doc)
+
+    if isLetter(txt[-1]):
+        if withinWord:
+            word = substr(txt, s, i)
+            insert(T, word, doc)
 
 
 def toUpp(c):
@@ -55,13 +60,11 @@ def isEndOfWord(txt, i):
         if ord(txt[i]) != 39:
             return True
 
-        try:
-            if isLetter(txt[i+1]):
-                return False
-            else:
-                return True
-        except:
+        if isLetter(txt[i + 1]):
+            return False
+        else:
             return True
+
     else:
         return False
 
@@ -84,7 +87,7 @@ def fetchDocList(T, word):
     nil.value = 0
 
     for i in range(len(doclist)):
-        if doclist[i] == None:
+        if doclist[i] is None:
             doclist[i] = nil
 
     return mergeSort(doclist)
