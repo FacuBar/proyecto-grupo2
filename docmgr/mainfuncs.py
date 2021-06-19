@@ -4,6 +4,8 @@ from algo1 import *
 from hashmap import HashMapNode
 
 """create()"""
+
+
 def indexDocs(path, docs):
     T = Trie()
     for doc in docs:
@@ -36,7 +38,7 @@ def indexWords(txt, doc, T):
 def toUpp(c):
     if ord(c) > 96 and ord(c) < 123:
         return chr(ord(c) - ord('a') + ord('A'))
-    else: 
+    else:
         return c
 
 
@@ -45,14 +47,14 @@ def isLetter(c):
     if ord(c) > 64 and ord(c) < 91:
         return True
     else:
-        return False 
+        return False
 
 
 def isEndOfWord(txt, i):
     if not isLetter(txt[i]):
         if ord(txt[i]) != 39:
             return True
-    
+
         try:
             if isLetter(txt[i+1]):
                 return False
@@ -62,11 +64,14 @@ def isEndOfWord(txt, i):
             return True
     else:
         return False
+
+
 """create()"""
 
 
-
 """search()"""
+
+
 def fetchDocList(T, word):
     temp = search(T, word)
 
@@ -81,7 +86,8 @@ def fetchDocList(T, word):
     for i in range(len(doclist)):
         if doclist[i] == None:
             doclist[i] = nil
-    
-    return mergeSort(doclist)
-"""search()"""
 
+    return mergeSort(doclist)
+
+
+"""search()"""

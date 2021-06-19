@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 import os
 
 
@@ -11,9 +11,10 @@ else:
     scripts = ['bin/docmgr']
 
 setup(
-    name = 'docmgr',
-    version = '0.0.0',
-    author = 'Facundo Escobar, Iñaki Rodriguez',
-    packages = ['docmgr'],
-    scripts = scripts,
+    name='docmgr',
+    version='0.0.0',
+    author='Facundo Escobar, Iñaki Rodriguez',
+    packages=['docmgr'],
+    scripts=scripts,
+    setup_requires=['autopep8'],
 )

@@ -30,18 +30,19 @@ def create(path):
         print("Indexing ...")
         indexDocs(path, docs)
         print('library created successfully')
-        #Pendiente permanencia en disco
+        # Pendiente permanencia en disco
 
     except:
-        print(f"FileNotFoundError: No such file or directory: '{path}'")
+        print("FileNotFoundError: No such file or directory:",
+              path, file=sys.stderr)
         sys.exit(0)
 
 
 def search(word):
-    #Recuperar estructura de disco
+    # Recuperar estructura de disco
     #T = Trie()
     T = None
-    #TODO
+    # TODO
     print("Searching ...")
     doclist = fetchDocList(T, word)
 
@@ -52,7 +53,6 @@ def search(word):
             print(f"({i}) {doclist[i].key}: {doclist[i].value}")
     else:
         print('no document found')
-
 
 
 def parse_args(prog, argv):

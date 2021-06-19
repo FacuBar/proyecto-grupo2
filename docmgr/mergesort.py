@@ -1,7 +1,9 @@
 from algo1 import *
 
+
 def mergeSort(arr):
     divide(arr, 0, len(arr) - 1)
+
 
 def divide(arr, start, tail):
     if start < tail:
@@ -11,6 +13,7 @@ def divide(arr, start, tail):
         divide(arr, med + 1, tail)
 
         merge(arr, start, med, tail)
+
 
 def merge(arr, start, med, tail):
     l1, l2 = (med-start+1), (tail-med)
@@ -33,13 +36,13 @@ def merge(arr, start, med, tail):
             arr[k] = right[j]
             j += 1
         k += 1
-    
-    while i<l1:
+
+    while i < l1:
         arr[k] = left[i]
         i += 1
         k += 1
 
-    while j<l2:
+    while j < l2:
         arr[k] = right[j]
-        j+=1
-        k+=1
+        j += 1
+        k += 1

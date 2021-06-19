@@ -71,7 +71,7 @@ def _search(D, i, k):
         return None
 
     h = i
-    while D.head[i] is not None: 
+    while D.head[i] is not None:
         if D.head[i].key == k:
             return D.head[i]
 
@@ -159,7 +159,7 @@ def print_hashmap(D):
 #    hashmap_insert(D, "cuu\\", 6)
 #    hashmap_insert(D, "cuu%", 7)
 #    print_hashmap(D)
-#    
+#
 #    print()
 #    print("Deletion")
 #    delete(D, "cuu\\")
