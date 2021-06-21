@@ -20,25 +20,25 @@ class TrieNode:
 
 
 def insert(T, element, doc):
-    if not T.root:
+    if T.root is None:
         T.root = TrieNode()
         T.root.children = LinkedList()
         T.root.children.head = Node()
         T.root.children.head.value = TrieNode()
         T.root.children.head.value.parent = T.root
-        T.root.children.head.value.key = toUpp(element[0])
+        T.root.children.head.value.key = to_upp(element[0])
 
     return _insert(T.root.children.head.value, element, 0, doc)
 
 
 def _insert(node, c, i, doc):
     # Si la key del TrieNode no coincide con el char ...
-    if node.key != toUpp(c[i]):
+    if node.key != to_upp(c[i]):
         # Se sigue buscando en los hermanos del TrieNode ...
         cn = node.parent.children.head
-        while cn:
+        while cn is not None:
             # Si un hno coincide, se llama la función desde este
-            if cn.value.key == toUpp(c[i]):
+            if cn.value.key == to_upp(c[i]):
                 return _insert(cn.value, c, i, doc)
 
             if cn.nextNode is None:
@@ -48,19 +48,19 @@ def _insert(node, c, i, doc):
         temp.nextNode = Node()
         temp.nextNode.value = TrieNode()
         temp.nextNode.value.parent = node.parent
-        temp.nextNode.value.key = toUpp(c[i])
+        temp.nextNode.value.key = to_upp(c[i])
         return _insert(temp.nextNode.value, c, i, doc)
 
     else:
         if len(c) - 1 == i:
-            if node.isEndOfWord is False:
+            if node.isEndOfWord:
                 D = HashMap()
                 node.rep = D
                 node.isEndOfWord = True
             # Se contabiliza repeticiones de la palabra en doc
 
             temp = hashmap_search(node.rep, doc)
-            if temp:
+            if temp is not None:
                 temp.value += 1
             else:
                 hashmap_insert(node.rep, doc)
@@ -69,14 +69,14 @@ def _insert(node, c, i, doc):
         # Si no es final de palabra ...
         else:
             # y tiene hijos, llamada recursiva
-            if node.children:
+            if node.children is not None:
                 return _insert(node.children.head.value, c, i+1, doc)
             # y no tiene hijos, se crea el TrieNode corresp y llamada recursiva
             else:
                 node.children = LinkedList()
                 node.children.head = Node()
                 node.children.head.value = TrieNode()
-                node.children.head.value.key = toUpp(c[i+1])
+                node.children.head.value.key = to_upp(c[i+1])
                 node.children.head.value.parent = node
                 return _insert(node.children.head.value, c, i+1, doc)
 
@@ -85,7 +85,7 @@ def _insert(node, c, i, doc):
 
 
 def search(T, element):
-    if not T.root:
+    if T.root is None:
         return False
 
     return _search(T.root.children.head.value, element, 0)
@@ -93,13 +93,13 @@ def search(T, element):
 
 def _search(node, c, i):
     # Si la key del TrieNode no coincide con el char ...
-    if node.key != toUpp(c[i]):
+    if node.key != to_upp(c[i]):
         # Se sigue buscando en los hermanos del TrieNode ...
         if node.parent.children is not None:
             cn = node.parent.children.head
-            while cn:
+            while cn is not None:
                 # Si un hno coincide, se llama la función desde este
-                if cn.value.key == toUpp(c[i]):
+                if cn.value.key == to_upp(c[i]):
                     return _search(cn.value, c, i)
                 cn = cn.nextNode
             # Si el TrieNode no tiene hno, la palabra no existe
@@ -107,13 +107,13 @@ def _search(node, c, i):
 
     else:
         if len(c) - 1 == i:
-            if node.isEndOfWord is True:
+            if node.isEndOfWord:
                 return node
             return False
         # Si no es final de palabra ...
         else:
             # y tiene hijos, llamada recursiva
-            if node.children and length(node.children) > 0:
+            if node.children is not None and length(node.children) > 0:
                 return _search(node.children.head.value, c, i+1)
             # y no tiene hijos, la palabra no existe
             else:
@@ -124,12 +124,12 @@ def _search(node, c, i):
 
 
 def delete(T, element):
-    if not T.root:
+    if T.root is None:
         return False
     # Se busca el último nodo del elemento en el trie
     node = _search(T.root.children.head.value, element, 0)
     # Si el elemento no está en el nodo, return False
-    if not node:
+    if node is None:
         return False
 
     return _delete(node)
@@ -138,13 +138,13 @@ def delete(T, element):
 
 def _delete(node):
     # Si el elemento está contenido dentro de otro se desmarca eow.
-    if node.children and node.isEndOfWord:
+    if node.children is not None and node.isEndOfWord:
         node.isEndOfWord = False
         return True
 
-    while node.isEndOfWord is None or node.key is not None:
+    while node.isEndOfWord or node.key is not None:
         # Si elemento comparte segmentos con otra palabra, se termina el proceso de eliminación
-        if node.children:
+        if node.children is not None:
             break
         # Si no lo hace, se desvincula el nodo
         list_delete(node.parent.children, node)
@@ -158,7 +158,7 @@ def _delete(node):
 
 
 def get_words(T):
-    if not T.root or not T.root.children:
+    if T.root is None or T.root.children is None:
         return None
     # LD donde se almacenan palabras.
     li = LinkedList()
@@ -169,12 +169,12 @@ def get_words(T):
 def _get_words(node, li, i=0, word=Array(33, 'c')):
     if node.key is None:
         cn = node.children.head
-        while cn:
+        while cn is not None:
             _get_words(cn.value, li)
             cn = cn.nextNode
         return
 
-    if node.isEndOfWord is True:
+    if node.isEndOfWord:
         word[i] = node.key
         # caracter que denota final de palabra
         word[i + 1] = '/'
@@ -182,16 +182,16 @@ def _get_words(node, li, i=0, word=Array(33, 'c')):
         string = get_string(word)
         append(li, string)
 
-        if node.children:
+        if node.children is not None:
             cn = node.children.head
-            while cn:
+            while cn is not None:
                 _get_words(cn.value, li, i + 1)
                 cn = cn.nextNode
 
     else:
         word[i] = node.key
         cn = node.children.head
-        while cn:
+        while cn is not None:
             _get_words(cn.value, li, i + 1)
             cn = cn.nextNode
 
@@ -211,7 +211,7 @@ def len_array_word(word):
             return i
 
 
-def toUpp(c):
+def to_upp(c):
     if ord(c) > 96 and ord(c) < 123:
         return chr(ord(c) - ord('a') + ord('A'))
     else:
