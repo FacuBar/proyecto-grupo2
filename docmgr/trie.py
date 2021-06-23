@@ -53,7 +53,7 @@ def _insert(node, c, i, doc):
 
     else:
         if len(c) - 1 == i:
-            if node.isEndOfWord:
+            if not node.isEndOfWord:
                 D = HashMap()
                 node.rep = D
                 node.isEndOfWord = True
