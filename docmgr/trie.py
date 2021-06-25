@@ -58,10 +58,11 @@ def _insert(node, c, i, doc):
                 node.rep = D
                 node.isEndOfWord = True
 
-                hashmap_insert(node.rep, doc)
-
             temp = hashmap_search(node.rep, doc)
-            temp.value += 1
+            if temp:
+                temp.value += 1
+            else:
+                hashmap_insert(node.rep, doc)
 
             return node
         # Si no es final de palabra ...
