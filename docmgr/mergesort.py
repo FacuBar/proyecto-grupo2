@@ -1,4 +1,5 @@
 from .algo1 import Array
+from .hashmap import HashMapNode
 
 
 def mergeSort(arr):
@@ -17,8 +18,8 @@ def divide(arr, start, tail):
 
 def merge(arr, start, med, tail):
     l1, l2 = (med-start+1), (tail-med)
-    left = Array(l1, 0)
-    right = Array(l2, 0)
+    left = Array(l1, HashMapNode())
+    right = Array(l2, HashMapNode())
 
     for i in range(l1):
         left[i] = arr[start + i]
