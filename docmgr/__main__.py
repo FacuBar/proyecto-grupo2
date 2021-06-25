@@ -1,4 +1,5 @@
 from .mainfuncs import fetchDocList, indexDocs
+from .serializacion import load
 import sys
 import os
 
@@ -22,12 +23,16 @@ def usage(prog):
 
 
 def create(path):
+    if path[-1:] != '/':
+        path += '/'
+
     try:
         docs = os.listdir(path)
         print("Indexing ...")
         indexDocs(path, docs)
         print('library created successfully')
-        # Pendiente permanencia en disco
+
+        sys.exit(0)
 
     except Exception as e:
         print(e.__class__.__name__ + ":", e, file=sys.stderr)
@@ -35,10 +40,8 @@ def create(path):
 
 
 def search(word):
-    # Recuperar estructura de disco
-    # T = Trie()
-    T = None
-    # TODO
+    T = load()
+    
     print("Searching ...")
     doclist = fetchDocList(T, word)
 
@@ -46,9 +49,11 @@ def search(word):
         for i in range(len(doclist)):
             if doclist[i].key is None:
                 break
-            print(f"({i}) {doclist[i].key}: {doclist[i].value}")
+            print(f"({i+1}) {doclist[i].key}: {doclist[i].value}")
     else:
         print('no document found')
+    
+    sys.exit(0)
 
 
 def parse_args(prog, argv):

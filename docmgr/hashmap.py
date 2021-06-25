@@ -27,7 +27,7 @@ def key_hash(k):
     return h % SIZE
 
 
-def hashmap_insert(D, k, v):
+def hashmap_insert(D, k, v = 0):
     i = key_hash(k)
 
     if not D.head:

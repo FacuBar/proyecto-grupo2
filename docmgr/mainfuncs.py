@@ -2,6 +2,7 @@ from .algo1 import String, substr
 from .hashmap import HashMapNode
 from .mergesort import mergeSort
 from .trie import Trie, insert, search
+from .serializacion import save
 
 """create()"""
 
@@ -12,11 +13,13 @@ def indexDocs(path, docs):
         if doc[-4:] != '.txt':
             continue
 
-        doc = path + doc
-        with open(doc, encoding='utf-8') as file:
-            txt = file.read
+        dir = path + doc
+        with open(dir, encoding='utf-8') as file:
+            txt = file.read()
             txt = String(txt)
             indexWords(txt, doc, T)
+
+            save(T)
 
 
 def indexWords(txt, doc, T):
@@ -33,11 +36,6 @@ def indexWords(txt, doc, T):
                 withinWord = False
                 word = substr(txt, s, i)
                 insert(T, word, doc)
-
-    if isLetter(txt[-1]):
-        if withinWord:
-            word = substr(txt, s, i)
-            insert(T, word, doc)
 
 
 def toUpp(c):
@@ -79,7 +77,7 @@ def fetchDocList(T, word):
     temp = search(T, word)
 
     if temp:
-        doclist = temp.rep
+        doclist = temp.rep.head
     else:
         return None
 
@@ -90,7 +88,8 @@ def fetchDocList(T, word):
         if doclist[i] is None:
             doclist[i] = nil
 
-    return mergeSort(doclist)
+    mergeSort(doclist)
+    return doclist
 
 
 """search()"""

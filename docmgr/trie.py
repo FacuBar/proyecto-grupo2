@@ -57,13 +57,11 @@ def _insert(node, c, i, doc):
                 D = HashMap()
                 node.rep = D
                 node.isEndOfWord = True
-            # Se contabiliza repeticiones de la palabra en doc
+
+                hashmap_insert(node.rep, doc)
 
             temp = hashmap_search(node.rep, doc)
-            if temp is not None:
-                temp.value += 1
-            else:
-                hashmap_insert(node.rep, doc)
+            temp.value += 1
 
             return node
         # Si no es final de palabra ...
