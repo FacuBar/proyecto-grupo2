@@ -57,6 +57,10 @@ def search(word):
 
 
 def parse_args(prog, argv):
+    if len(argv) > 2:
+        usage(prog)
+        sys.exit(1)
+
     if (argv[0] == "-s" or argv[0] == "--search"):
         search(argv[1])
     elif (argv[0] == "-c" or argv[0] == "--create"):
@@ -73,13 +77,7 @@ def parse_args(prog, argv):
 
 
 def main():
-    if len(os.sys.argv) > 3:
-        usage(os.sys.argv[0])
-        sys.exit(1)
-
     parse_args(os.sys.argv[0], os.sys.argv[1:])
-
-    print(os.sys.argv)
 
 
 if __name__ == "__main__":
