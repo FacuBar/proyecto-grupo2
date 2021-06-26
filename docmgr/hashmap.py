@@ -3,12 +3,13 @@ from math import floor
 from .algo1 import Array
 
 
-SIZE = 1000
 A = 1.61803398874989484820
 
 
 class HashMap:
     head = None
+    size = 20
+    step = 10
 
 
 class HashMapNode:
@@ -17,21 +18,39 @@ class HashMapNode:
     seqHeight = 0
 
 
-def key_hash(k):
+def key_hash(k, size):
     b = str.encode(k)
     h = 0
 
     for c in range(0, len(b)):
-        h += floor(SIZE * (b[c]*A % 1))
+        h += floor(size * (b[c]*A % 1))
 
-    return h % SIZE
+    return h % size
+
+
+def _resize(D, k, v):
+    size = D.size
+    head = D.head
+
+    if size % 9:
+        D.step *= 10
+        D.size = D.step
+    else:
+        D.size += D.step
+
+    D.head = None
+
+    for i in range(0, size):
+        hashmap_insert(D, head[i].key, head[i].value)
+
+    hashmap_insert(D, k, v)
 
 
 def hashmap_insert(D, k, v = 1):
     i = key_hash(k)
 
     if not D.head:
-        D.head = Array(SIZE, HashMapNode())
+        D.head = Array(D.size, HashMapNode())
 
     n = _new_hash_node(k, v)
     cur = D.head[i]
@@ -53,10 +72,10 @@ def hashmap_insert(D, k, v = 1):
             seqHeight += 1
 
             i += 1
-            if i >= SIZE:
-                i -= SIZE
+            if i >= D.size:
+                i -= D.size
             if i == h:
-                raise MemoryError("ERROR! Full hashmap.")
+                _resize(D, k, v)
 
             cur = D.head[i]
 
@@ -80,8 +99,8 @@ def _search(D, i, k):
 
         if i == h:
             return None
-        if i >= SIZE:
-            i -= SIZE
+        if i >= D.size:
+            i -= D.size
 
     return None
 
@@ -104,8 +123,8 @@ def delete(D, k):
     ret = pre
 
     j = i + 1
-    if j >= SIZE:
-        j -= SIZE
+    if j >= size:
+        j -= size
     cur = D.head[j]
 
     while pre is not None:
@@ -115,8 +134,8 @@ def delete(D, k):
 
         i = j
         j += 1
-        if j >= SIZE:
-            j -= SIZE
+        if j >= D.size:
+            j -= D.size
 
         temp = D.head[j]
         cur = temp
@@ -138,7 +157,7 @@ def _new_hash_node(k, v):
 
 
 def print_hashmap(D):
-    for i in range(0, SIZE):
+    for i in range(0, D.size):
         if D.head[i] is not None:
             print(D.head[i].key)
             print(" ", D.head[i].value, D.head[i].seqHeight, i)
