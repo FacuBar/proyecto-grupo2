@@ -47,7 +47,7 @@ def _resize(D, k, v):
 
 
 def hashmap_insert(D, k, v=1):
-    i = key_hash(k)
+    i = key_hash(k, D.size)
 
     if not D.head:
         D.head = Array(D.size, HashMapNode())
@@ -106,13 +106,13 @@ def _search(D, i, k):
 
 
 def hashmap_search(D, k):
-    i = key_hash(k)
+    i = key_hash(k, D.size)
 
     return _search(D, i, k)
 
 
 def delete(D, k):
-    h = key_hash(k)
+    h = key_hash(k, D.size)
 
     i = _search(D, h, k)
     if i < 0:
