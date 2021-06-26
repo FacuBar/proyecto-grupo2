@@ -29,7 +29,7 @@ class LinkedListIter:
 class DocMgrJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Trie):
-            return list(LinkedListIter(word_list.head))
+            return list(LinkedListIter(obj.head))
         elif isinstance(obj, HashMap):
             dct = {}
             return dct
@@ -95,8 +95,3 @@ def dump_json(jf):
 
 def dumps_json(jd):
     return json.dumps(jd, cls=DocMgrJSONEncoder)
-
-
-dct = loads_json("[ { \"foo\": { \"John Doe\": { \"@line\": 47, \"@column\": 15 }, \"Ubik\": { \"@line\": 62, \"@column\": 83 } } }, { \"bar\": {} } ]")
-
-print(dct)

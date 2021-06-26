@@ -41,7 +41,7 @@ def create(path):
 
 def search(word):
     T = load()
-    
+
     print("Searching ...")
     doclist = fetchDocList(T, word)
 
@@ -52,7 +52,7 @@ def search(word):
             print(f"({i+1}) {doclist[i].key}: {doclist[i].value}")
     else:
         print('no document found')
-    
+
     sys.exit(0)
 
 

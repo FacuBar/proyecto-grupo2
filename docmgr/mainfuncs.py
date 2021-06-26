@@ -72,21 +72,21 @@ def isEndOfWord(txt, i):
 
 
 def extractMail(txt, i):
-    s=i
+    s = i
     while s > 0:
         s -= 1
         if ord(txt[s]) == 32 or ord(txt[s]) == 10:
             if isLetter(txt[s+1]):
-                s+=1
+                s += 1
             else:
-                s+=2
+                s += 2
             break
-    
+
     while i < len(txt):
         i += 1
         if ord(txt[i]) == 32 or ord(txt[i]) == 10:
             if not isLetter(txt[i-1]) and txt[i-1] != '@':
-                i-=1
+                i -= 1
             break
 
     return substr(txt, s, i)

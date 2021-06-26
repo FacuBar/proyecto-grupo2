@@ -46,7 +46,7 @@ def _resize(D, k, v):
     hashmap_insert(D, k, v)
 
 
-def hashmap_insert(D, k, v = 1):
+def hashmap_insert(D, k, v=1):
     i = key_hash(k)
 
     if not D.head:
@@ -123,8 +123,8 @@ def delete(D, k):
     ret = pre
 
     j = i + 1
-    if j >= size:
-        j -= size
+    if j >= D.size:
+        j -= D.size
     cur = D.head[j]
 
     while pre is not None:
