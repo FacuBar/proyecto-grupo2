@@ -40,9 +40,14 @@ def create(path):
 
 
 def search(word):
-    T = load()
-
     print("Searching ...")
+
+    try:
+        T = load()
+    except:
+        print('no document found')
+        sys.exit(1)
+
     doclist = fetchDocList(T, word)
 
     if doclist:

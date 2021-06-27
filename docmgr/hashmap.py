@@ -8,8 +8,7 @@ A = 1.61803398874989484820
 
 class HashMap:
     head = None
-    size = 20
-    step = 10
+    size = None
 
 
 class HashMapNode:
@@ -28,29 +27,12 @@ def key_hash(k, size):
     return h % size
 
 
-def _resize(D, k, v):
-    size = D.size
-    head = D.head
-
-    if size % 9:
-        D.step *= 10
-        D.size = D.step
-    else:
-        D.size += D.step
-
-    D.head = None
-
-    for i in range(0, size):
-        hashmap_insert(D, head[i].key, head[i].value)
-
-    hashmap_insert(D, k, v)
-
-
-def hashmap_insert(D, k, v=1):
-    i = key_hash(k, D.size)
+def hashmap_insert(D, k, size, v = 1):
+    i = key_hash(k, size)
 
     if not D.head:
-        D.head = Array(D.size, HashMapNode())
+        D.head = Array(size, HashMapNode())
+        D.size = size
 
     n = _new_hash_node(k, v)
     cur = D.head[i]
@@ -75,7 +57,7 @@ def hashmap_insert(D, k, v=1):
             if i >= D.size:
                 i -= D.size
             if i == h:
-                _resize(D, k, v)
+                raise MemoryError("ERROR! Full hashmap.")
 
             cur = D.head[i]
 
@@ -105,7 +87,10 @@ def _search(D, i, k):
     return None
 
 
-def hashmap_search(D, k):
+def hashmap_search(D, k, size):
+    if not D.size:
+        D.size = size
+        
     i = key_hash(k, D.size)
 
     return _search(D, i, k)
@@ -161,6 +146,26 @@ def print_hashmap(D):
         if D.head[i] is not None:
             print(D.head[i].key)
             print(" ", D.head[i].value, D.head[i].seqHeight, i)
+
+
+"""
+def _resize(D, k, v):
+    size = D.size
+    head = D.head
+
+    if size % 9:
+        D.step *= 10
+        D.size = D.step
+    else:
+        D.size += D.step
+
+    D.head = None
+
+    for i in range(0, size):
+        hashmap_insert(D, head[i].key, head[i].value)
+
+    hashmap_insert(D, k, v)
+"""
 
 
 #    print(key_hash("hello"))
