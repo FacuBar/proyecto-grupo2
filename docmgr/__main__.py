@@ -35,6 +35,7 @@ def create(path):
         sys.exit(0)
 
     except Exception as e:
+        print("Index could not be created:", file=sys.stderr)
         print(e.__class__.__name__ + ":", e, file=sys.stderr)
         sys.exit(1)
 
@@ -44,8 +45,9 @@ def search(word):
 
     try:
         T = load()
-    except:
-        print('no document found')
+    except Exception as e:
+        print("No document found:", file=sys.stderr)
+        print(e.__class__.__name__ + ":", e, file=sys.stderr)
         sys.exit(1)
 
     doclist = fetchDocList(T, word)

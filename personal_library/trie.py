@@ -201,7 +201,7 @@ def get_string(a):
         s = concat(s, String(a[i]))
     return s
 
-    
+
 def len_array_word(word):
     for i in range(33):
         if word[i] == '/':
