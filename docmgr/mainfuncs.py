@@ -1,8 +1,8 @@
-from .algo1 import String, substr
-from .hashmap import HashMapNode
-from .mergesort import mergeSort
-from .trie import Trie, insert, search
-from .serializacion import save
+from algo1 import String, substr
+from hashmap import HashMapNode
+from mergesort import mergeSort
+from trie import Trie, insert, search
+from serializacion import save
 
 
 """create()"""

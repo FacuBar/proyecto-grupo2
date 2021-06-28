@@ -1,6 +1,6 @@
-from .algo1 import Array, String, concat
-from .hashmap import HashMap, hashmap_insert, hashmap_search
-from .linkedlist import LinkedList, Node, delete as list_delete, length, append
+from algo1 import Array, String, concat
+from hashmap import HashMap, hashmap_insert, hashmap_search
+from linkedlist import LinkedList, Node, delete as list_delete, length, append
 
 
 class Trie:

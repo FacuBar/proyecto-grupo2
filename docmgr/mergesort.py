@@ -1,5 +1,5 @@
-from .algo1 import Array
-from .hashmap import HashMapNode
+from algo1 import Array
+from hashmap import HashMapNode
 
 
 def mergeSort(arr):

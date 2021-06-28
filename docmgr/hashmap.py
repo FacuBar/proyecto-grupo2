@@ -1,6 +1,6 @@
 from math import floor
 
-from .algo1 import Array
+from algo1 import Array
 
 
 A = 1.61803398874989484820
